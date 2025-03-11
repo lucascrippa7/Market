@@ -2,7 +2,11 @@ package br.com.LucasCrippa.Market.services;
 
 import br.com.LucasCrippa.Market.entities.Usuario;
 import br.com.LucasCrippa.Market.repositories.UsuarioRepository;
+import br.com.LucasCrippa.Market.services.exceptions.DatabaseException;
+import br.com.LucasCrippa.Market.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +19,13 @@ public class UsuarioService {
     private UsuarioRepository repository;
 
     public List<Usuario> findAll(){
+
         return repository.findAll();
     }
 
     public Usuario findById(Long id){
         Optional<Usuario> obj = repository.findById(id);
-        return obj.orElseThrow();
+        return obj.orElseThrow(()-> new ResourceNotFoundException(id));
     }
 
     public Usuario insert(Usuario obj){
@@ -35,8 +40,8 @@ public class UsuarioService {
             else {
                 System.out.println("Deu ruim");
             }
-        } catch (Exception e) {
-            System.out.println("Erro ao deletar o usuario");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -45,8 +50,8 @@ public class UsuarioService {
             Usuario entity = repository.getReferenceById(id);
             updateData(entity, obj);
             return repository.save(entity);
-        } catch (Exception e){
-            throw new RuntimeException("Erro ao atualizar usuário: " + e.getMessage());
+        } catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
         }
     }
 
