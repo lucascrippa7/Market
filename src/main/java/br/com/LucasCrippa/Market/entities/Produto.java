@@ -1,12 +1,12 @@
 package br.com.LucasCrippa.Market.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name= "produto_market")
 public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
