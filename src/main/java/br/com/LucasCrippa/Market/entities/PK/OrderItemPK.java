@@ -1,10 +1,11 @@
-package com.br.estudoCrippa.course.entities.pk;
+package br.com.LucasCrippa.Market.entities.PK;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.br.estudoCrippa.course.entities.Order;
-import com.br.estudoCrippa.course.entities.Product;
+import br.com.LucasCrippa.Market.entities.OrdemSe;
+import br.com.LucasCrippa.Market.entities.Produto;
+
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -19,27 +20,26 @@ public class OrderItemPK implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "order_id")
-	private Order order;
+	private OrdemSe ordem;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
-	private Product product;
-	public Order getOrder() {
-		return order;
+	private Produto produto;
+	public OrdemSe getOrdem() {
+		return ordem;
 	}
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrdem(OrdemSe ordem) {
+		this.ordem = ordem;
 	}
-	public Product getProduct() {
-		return product;
+
+	public Produto getProduto() {
+		return produto;
 	}
-	public void setProduct(Product product) {
-		this.product = product;
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(order, product);
-	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -49,11 +49,11 @@ public class OrderItemPK implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItemPK other = (OrderItemPK) obj;
-		return Objects.equals(order, other.order) && Objects.equals(product, other.product);
+		return Objects.equals(ordem, other.ordem) && Objects.equals(produto, other.produto);
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(ordem, produto);
+	}
 }
