@@ -29,7 +29,7 @@ public class OrdemSe implements Serializable {
     @JoinColumn(name = "client_id")
     private Usuario cliente;
 
-    @OneToMany(mappedBy = "id.ordemSe")
+    @OneToMany(mappedBy = "id.ordem")
     private Set<OrdemDeItem> items = new HashSet<>();
 
 
