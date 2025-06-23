@@ -3,7 +3,9 @@ package br.com.LucasCrippa.Market.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name= "produto_market")
@@ -17,6 +19,14 @@ public class Produto implements Serializable {
     private String produto;
     private Enum tipo;
     private Double preco;
+
+
+    @ManyToMany
+    @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    private Set<Categoria> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrdemDeItem> items = new HashSet<>();
 
     public Produto() {
     }

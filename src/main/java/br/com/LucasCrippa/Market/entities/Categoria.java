@@ -26,7 +26,7 @@ public class Categoria implements Serializable {
 	private String nome;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
+	@ManyToMany(mappedBy = "categorias")
 	private Set<Produto> produto = new HashSet<>();
 
 	public Categoria() {
