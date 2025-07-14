@@ -1,5 +1,6 @@
 package br.com.LucasCrippa.Market.entities;
 
+import br.com.LucasCrippa.Market.entities.enums.TipoProduto;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,12 +18,13 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String produto;
-    private Enum tipo;
+    private Integer tipo;
     private Double preco;
 
 
     @ManyToMany
-    @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    @JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private Set<Categoria> categorias = new HashSet<>();
 
     @OneToMany(mappedBy = "id.produto")
@@ -31,10 +33,10 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String produto, Enum tipo, Double preco) {
+    public Produto(Long id, String produto, TipoProduto tipo, Double preco) {
         this.id = id;
         this.produto = produto;
-        this.tipo = tipo;
+        setTipo(tipo);
         this.preco = preco;
     }
 
@@ -50,12 +52,12 @@ public class Produto implements Serializable {
         this.produto = produto;
     }
 
-    public Enum getTipo() {
+    public Integer getTipo() {
         return tipo;
     }
 
-    public void setTipo(Enum tipo) {
-        this.tipo = tipo;
+    public void setTipo(TipoProduto tipo) {
+        this.tipo = (tipo != null) ? tipo.getCodigo() : null;
     }
 
     public Double getPreco() {
