@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,6 +48,20 @@ class ProdutoServiceTest {
     }
 
     @Test
-    void findById() {
+    void findById_DeveRetornarUsuario() {
+
+        Produto produto = new Produto(1L, "Perfume", TipoProduto.PERFUME, 12.56);
+        Produto produto2 = new Produto(2L, "Shampoo", TipoProduto.PRODUTOSCAPILARES, 15.00);
+        Produto produto3 = new Produto(3L, "Hidratante", TipoProduto.HIDRATANTES, 30.00);
+
+        when(produtoRepository.findById(1L)).thenReturn(Optional.of(produto));
+
+        Produto resultado = produtoService.findById(1l);
+
+        assertEquals("Perfume", resultado.getProduto());
+        verify(produtoRepository, times(1)).findById(1L);
+
+
+
     }
 }
